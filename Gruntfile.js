@@ -28,12 +28,12 @@ module.exports = function (grunt) {
     },
 
     sshconfig: {
-      "webfaction": grunt.file.readJSON('SECRET-webfaction.json')
+      'webfaction': grunt.file.readJSON('SECRET-webfaction.json')
     },
 
     sshexec: {
       webfactionClearDeployDir: {
-        command: "rm -r <%= sshconfig.webfaction.path%>*",
+        command: 'rm -r <%= sshconfig.webfaction.path%>*',
         options: {
           host: '<%= sshconfig.webfaction.host %>',
           username: '<%= sshconfig.webfaction.username %>',
@@ -43,10 +43,10 @@ module.exports = function (grunt) {
       },
       webfactionDeployUploaded: {
         command: [
-          "cd <%= sshconfig.webfaction.path%>",
-          "rm -r $(ls <%= sshconfig.webfaction.path%> | grep -v '^dist$')",
-          "mv <%= sshconfig.webfaction.path%>dist/* <%= sshconfig.webfaction.path%>",
-          "rm -r <%= sshconfig.webfaction.path%>dist"
+          'cd <%= sshconfig.webfaction.path%>',
+          'rm -r $(ls <%= sshconfig.webfaction.path%> | grep -v "^dist$")',
+          'mv <%= sshconfig.webfaction.path%>dist/* <%= sshconfig.webfaction.path%>',
+          'rm -r <%= sshconfig.webfaction.path%>dist'
         ].join(' && '),
         options: {
           host: '<%= sshconfig.webfaction.host %>',
@@ -58,14 +58,14 @@ module.exports = function (grunt) {
       /*
       webfactionDeployUploadedWithBackup: {
         command: [
-          "shopt -s extglob",
-          "rm -rf <%= sshconfig.webfaction.path%>backup",
-          "mkdir -p <%= sshconfig.webfaction.path %>backup",
-          "cd <%= sshconfig.webfaction.path%>",
-          "cp -r <%= sshconfig.webfaction.path %>!(dist|backup) <% sshconfig.webfaction.path %>backup/",
-          "find . ! -name dist ! -name backup -maxdepth 1",
-          //"rm -r $(ls <%= sshconfig.webfaction.path%> | grep -v '^(dist|backup)$')",
-          "mv <%= sshconfig.webfaction.path%>dist/* <%= sshconfig.webfaction.path%>"
+          'shopt -s extglob',
+          'rm -rf <%= sshconfig.webfaction.path%>backup',
+          'mkdir -p <%= sshconfig.webfaction.path %>backup',
+          'cd <%= sshconfig.webfaction.path%>',
+          'cp -r <%= sshconfig.webfaction.path %>!(dist|backup) <% sshconfig.webfaction.path %>backup/',
+          'find . ! -name dist ! -name backup -maxdepth 1',
+          //'rm -r $(ls <%= sshconfig.webfaction.path%> | grep -v "^(dist|backup)$")',
+          'mv <%= sshconfig.webfaction.path%>dist/* <%= sshconfig.webfaction.path%>'
         ].join(' && '),
         options: {
           host: '<%= sshconfig.webfaction.host %>',
@@ -81,7 +81,7 @@ module.exports = function (grunt) {
       // uploads directly to deploy dir
       uploadToWebfactionDeployDir : {
         files: {
-          "./": "dist/**"
+          './': 'dist/**'
         },
         options: {
           host: '<%= sshconfig.webfaction.host %>',
@@ -97,7 +97,7 @@ module.exports = function (grunt) {
       // will upload the dist folder to deploypath/dist
       uploadToWebfaction : {
         files: {
-          "./": "dist/**"
+          './': 'dist/**'
         },
         options: {
           host: '<%= sshconfig.webfaction.host %>',
@@ -308,7 +308,7 @@ module.exports = function (grunt) {
           {
             expand: true,
             cwd: '<%= yeoman.app %>/images',
-            src: ['{,*/}*.svg', '{,*/}*.jpg'],
+            src: '{,*/}*.svg',
             dest: '<%= yeoman.dist %>/images'
           }
         ]
@@ -508,8 +508,7 @@ module.exports = function (grunt) {
 
   // Uploads files, overwriting where relevant - does not delete no longer used files
   grunt.registerTask('deployToWebfaction-quick',[
-    'sftp:uploadToWebfaction',
-    'sshexec:webfactionDeployUploaded'
+    'build',
+    'sftp:uploadToWebfactionDeployDir',
   ]);
-
 };

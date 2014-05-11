@@ -1,14 +1,14 @@
 'use strict';
 
-angular
-  .module('klipoteket', [
+var app = angular.module('klipoteketApp', [
     'ngCookies',
     'ngResource',
     'ngSanitize',
     'ngRoute',
     'angular-flexslider'
-  ])
-  .config(function ($routeProvider) {
+  ]);
+
+app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/forside.html'
@@ -19,11 +19,22 @@ angular
       .otherwise({
         redirectTo: '/'
       });
-  });
+    $locationProvider.html5Mode( true );
+  }]);
 
-function HeaderController($scope, $location) {
-  $scope.isActive = function (viewLocation) {
-    var active = (viewLocation === $location.path());
-    return active;
-  };
+
+function HeaderCtrl($scope, $location, $route) {
+  $scope.activePath = null;
+  $scope.$on('$routeChangeSuccess', function(){
+    $scope.activePath = $location.path();
+  });
 }
+function SlideshowCtrl($scope){
+  $scope.slides = [
+    'http://flexslider.woothemes.com/images/kitchen_adventurer_cheesecake_brownie.jpg',
+    'http://flexslider.woothemes.com/images/kitchen_adventurer_lemon.jpg',
+    'http://flexslider.woothemes.com/images/kitchen_adventurer_donut.jpg',
+    'http://flexslider.woothemes.com/images/kitchen_adventurer_caramel.jpg'
+  ];
+}
+

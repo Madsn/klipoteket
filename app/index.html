@@ -12,23 +12,23 @@
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="/bower_components/flexslider/flexslider.css">
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css({.tmp,app}) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
+    <link rel="stylesheet" href="bower_components/flexslider/flexslider.css" />
   </head>
-  <body ng-app="klipoteket">
+  <body ng-app="klipoteketApp">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
     <div class="container">
-        <div class="header" ng-controller="HeaderController">
+        <div class="header" ng-controller="HeaderCtrl">
             <ul class="nav nav-pills pull-right">
-                <li ng-class="{ active: isActive('/')}"><a ng-href="#">Forside</a></li>
-                <li ng-class="{ active: isActive('/personale')}"><a ng-href="#/personale">Personale</a></li>
+                <li ng-class="{ active: activePath =='/'}"><a ng-href="/">Forside</a></li>
+                <li ng-class="{ active: activePath =='/personale'}"><a ng-href="#/personale">Personale</a></li>
             </ul>
             <h3 class="text-muted">Klipoteket Esbjerg</h3>
         </div>
@@ -68,14 +68,13 @@
     <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="bower_components/jqueryui/ui/jquery-ui.js"></script>
     <script src="bower_components/angular-flexslider/angular-flexslider.js"></script>
-    <script src="bower_components/flexslider/jquery.flexslider.js"></script>
-    <script src="bower_components/angular-flexslider/angular-flexslider.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
+    <script src="bower_components/flexslider/jquery.flexslider.js"></script>
+
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/forside.js"></script>
         <!-- endbuild -->
 </body>
 </html>
