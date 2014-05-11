@@ -29,6 +29,7 @@ function HeaderCtrl($scope, $location, $route) {
     $scope.activePath = $location.path();
   });
 }
+HeaderCtrl.$inject = ['$scope', '$location', '$route'];
 function SlideshowCtrl($scope){
   $scope.slides = [
     'http://flexslider.woothemes.com/images/kitchen_adventurer_cheesecake_brownie.jpg',
@@ -37,4 +38,5 @@ function SlideshowCtrl($scope){
     'http://flexslider.woothemes.com/images/kitchen_adventurer_caramel.jpg'
   ];
 }
+SlideshowCtrl.$inject = ['$scope'];
 

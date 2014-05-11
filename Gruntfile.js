@@ -247,8 +247,9 @@ module.exports = function (grunt) {
           src: [
             '<%= yeoman.dist %>/scripts/{,*/}*.js',
             '<%= yeoman.dist %>/styles/{,*/}*.css',
+            '<%= yeoman.dist %>/styles/fonts/{,*/}*.{eot,svg,ttf,woff}',
             '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-            '<%= yeoman.dist %>/styles/fonts/*'
+            '<%= yeoman.dist %>/styles/fonts/{,*/}*.*'
           ]
         }
       }
@@ -276,7 +277,7 @@ module.exports = function (grunt) {
     // Performs rewrites based on rev and the useminPrepare configuration
     usemin: {
       html: ['<%= yeoman.dist %>/{,*/}*.html'],
-      css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
+      css: ['<%= yeoman.dist %>/styles/{,*/}*.css', '<%= yeoman.dist %>/styles/fonts/{,*/}*.{eot,svg,ttf,woff}'],
       options: {
         assetsDirs: ['<%= yeoman.dist %>']
       }
@@ -493,8 +494,9 @@ module.exports = function (grunt) {
     'build'
   ]);
 
-  // Uploads files, deletes old files, moves uploaded files
+  // Builds, uploads files, deletes old files, moves uploaded files
   grunt.registerTask('deployToWebfaction-full',[
+    'build',
     'sftp:uploadToWebfaction',
     'sshexec:webfactionDeployUploaded'
   ]);
@@ -502,13 +504,13 @@ module.exports = function (grunt) {
   // Deletes old files, uploads new directly to deploy dir
   // warning: will result in downtime while uploading
   grunt.registerTask('deployToWebfaction-clean', [
+    'build',
     'sshexec:webfactionClearDeployDir',
     'sftp:uploadToWebfactionDeployDir'
   ]);
 
   // Uploads files, overwriting where relevant - does not delete no longer used files
   grunt.registerTask('deployToWebfaction-quick',[
-    'build',
     'sftp:uploadToWebfactionDeployDir',
   ]);
 };
